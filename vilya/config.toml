@@ -1,0 +1,176 @@
+title = "vilya configuration"
+config_version = 0
+
+[records]
+
+    [records.machine_specs]
+    
+        measure_period = 0  #time unit is seconds, set 0 for 'just once at startup'
+        #summarize_period = 1800  #not implemented, everything is treated as 'current' value for now
+        
+        [records.machine_specs.fields]
+        
+            host = ['current']
+            ip = ['current']
+            os = ['current']
+            cpu_count = ['current']
+            cpu_treads = ['current']
+            cpu_clock_max = ['current']
+            memory_total = ['current']
+            swap_total = ['current']
+            disk_total = ['current']
+
+
+    [records.machine_status]
+    
+        measure_period = 1
+        #summarize_period = 6
+        
+        [records.machine_status.fields]
+        
+            cpu_load = ['current', 'P10']
+            cpu_t_user = ['current']
+            cpu_t_system = ['current']
+            cpu_t_idle = ['current']
+            cpu_t_hardirq = ['current']
+            cpu_t_softirq = ['current']
+            cpu_t_steal = ['current']
+            memory_available = ['current']
+            swap_free = ['current']
+            disk_used = ['current']
+            disk_free = ['current']
+            disk_io_load = ['current']
+            network_in = ['current']
+            network_out = ['current']
+            uptime = ['current']
+
+
+    [records.node_config]
+        measure_period = 1800
+        #summarize_period = 1800
+        
+        [records.node_config.fields]
+            node_number = ['current']
+            name = ['current']
+            public_key = ['current']
+            chain_id = ['current']
+            round_duration = ['current']
+            rounds_per_epoch = ['current']
+            genesis_time = ['current']
+            observer_shard = ['current']
+            version = ['current']
+            latest_github_version = ['current']
+            binary_sha256 = ['current']
+            config_sha256 = ['current']
+
+
+    [records.node_status]
+        measure_period = 12
+        #summarize_period = 12
+        
+        [records.node_status.fields]
+            erd_node_display_name = ['current']
+            erd_latest_tag_software_version = ['current']
+            erd_public_key_block_sign = ['current']
+            erd_shard_id = ['current']
+            erd_node_type = ['current']
+            erd_peer_type  = ['current']
+            erd_consensus_state = ['current']
+            erd_is_syncing = ['current']
+            erd_nonce = ['current']
+            erd_probable_highest_nonce = ['current']
+            erd_metric_cross_check_block_height = ['current']
+            erd_epoch_number = ['current']
+            erd_current_round = ['current']
+            erd_current_round_timestamp = ['current']
+            erd_synchronized_round = ['current']
+            erd_current_block_size = ['current']
+            erd_count_consensus = ['current']
+            erd_metric_consensus_group_size = ['current']
+            erd_fork_choice_count = ['current']
+            erd_num_transactions_processed = ['current']
+            erd_tx_pool_load = ['current']
+            erd_num_connected_peers = ['current']
+            erd_connected_nodes = ['current']
+            erd_live_validator_nodes = ['current']
+            erd_network_recv_bps = ['current']
+            erd_network_recv_bps_peak = ['current']
+            erd_network_sent_bps = ['current']
+            erd_network_sent_bps_peak = ['current']
+            erd_highest_notarized_block_by_metachain_for_current_shard = ['current']
+            erd_round_at_epoch_start = ['current']
+            erd_num_connected_peers_classification = ['current']
+            erd_chain_id = ['current']
+            erd_round_time = ['current']
+            erd_rounds_per_epoch = ['current']
+            erd_p2p_peer_info = ['current']
+            erd_p2p_num_connected_peers_classification = ['current']
+            erd_p2p_intra_shard_validators = ['current']
+            erd_p2p_intra_shard_observers = ['current']
+            erd_p2p_cross_shard_observers = ['current']
+            erd_p2p_cross_shard_validators = ['current']
+            erd_p2p_unknown_shard_peers = ['current']
+
+
+    [records.network_status]
+        measure_period = 1800
+        summarize_period = 1800
+        
+        [records.network_status.fields]
+            public_keys = ['current']
+            tempRating = ['current']
+            numLeaderSuccess = ['current']
+            numLeaderFailure = ['current']
+            numValidatorSuccess = ['current']
+            numValidatorFailure = ['current']
+            rating = ['current']
+            ratingModifier = ['current']
+            totalNumLeaderSuccess = ['current']
+            totalNumLeaderFailure = ['current']
+            totalNumValidatorSuccess = ['current']
+            totalNumValidatorFailure = ['current']
+            timeStamp = ['current']
+            maxInactiveTime = ['current']
+            isActive = ['current']
+            receivedShardID = ['current']
+            computedShardID = ['current']
+            totalUpTimeSec = ['current']
+            totalDownTimeSec = ['current']
+            versionNumber = ['current']
+            nodeDisplayName = ['current']
+            peerType = ['current']
+
+
+[loggers]
+
+    [loggers.node-default]
+        level = "*:DEBUG"
+        sink = "sinks.example"
+
+
+[sinks]
+    
+    [sinks.examle]
+        type = "pipe-ssh-split"
+        
+        [sinks.example.parameters]
+            host = "example.net"
+            port = 22
+            user = "vilya"
+            path = "/home/vilya/vilya_data"
+
+
+    [sinks.screen]
+        type = "stdout"
+        
+        [sinks.screen.parameters]
+            # buffering = 0
+
+
+[scheduler]
+
+#time unit is seconds, set 0 for never
+    
+    ignore = ["network_status"]#, "machine_status", "node_config", "node_status", "network_status"]
+    
+
